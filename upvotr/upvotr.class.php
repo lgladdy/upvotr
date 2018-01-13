@@ -88,6 +88,7 @@ class upvotr {
 		if (!get_post($post)) throw new \Exception("Invalid Post ID");
 		$user = intval($user);
 		$upvotes = get_post_meta($post,'upvotr_upvotes',true);
+		if (empty($upvotes)) $upvotes = [];
 		$upvotes[$user] = true;
 		$upvotes_count = count($upvotes);
 		update_post_meta($post, 'upvotr_upvotes', $upvotes);
