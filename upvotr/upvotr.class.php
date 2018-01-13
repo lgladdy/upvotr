@@ -73,6 +73,7 @@ class upvotr {
 	
 	function has_upvoted_post($post,$user) {
 		if (intval($post) != $post || intval($user) != $user || $user == 0 || $post == 0) throw new \Exception('Both post and user fields must be integers and not 0');
+		$user = intval($user);
 		$upvotes = get_post_meta($post,'upvotr_upvotes',true);
 		if ($upvotes) {
 			if (isset($upvotes[$user])) {
@@ -85,6 +86,7 @@ class upvotr {
 	function add_post_upvote_for_user($post,$user) {
 		if (intval($post) != $post || intval($user) != $user || $user == 0 || $post == 0) throw new \Exception('Both post and user fields must be integers and not 0');
 		if (!get_post($post)) throw new \Exception("Invalid Post ID");
+		$user = intval($user);
 		$upvotes = get_post_meta($post,'upvotr_upvotes',true);
 		$upvotes[$user] = true;
 		$upvotes_count = count($upvotes);
@@ -95,6 +97,7 @@ class upvotr {
 	function remove_post_upvote_for_user($post,$user) {
 		if (intval($post) != $post || intval($user) != $user || $user == 0 || $post == 0) throw new \Exception('Both post and user fields must be integers and not 0');
 		if (!get_post($post)) throw new \Exception("Invalid Post ID");
+		$user = intval($user);
 		$upvotes = get_post_meta($post,'upvotr_upvotes',true);
 		unset($upvotes[$user]);
 		$upvotes_count = count($upvotes);
@@ -103,6 +106,7 @@ class upvotr {
 	}
 	
 	function get_users_upvotes($user) {
+		$user = intval($user);
 		$user_exists = get_user_by('id', $user);
 		if (!$user_exists) throw new \Exception('Invalid User');
 		$regex_search = 'i:'.strval($user).';';
